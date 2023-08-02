@@ -7,9 +7,9 @@ dockItems=(
     "file:///Applications/Google Chrome.app"
     "file:///Applications/Microsoft Word.app"
     "file:///Applications/Microsoft PowerPoint.app"
-    "file:///Applications/Adobe Illustrator.app"
-    "file:///Applications/Adobe InDesign.app"
-    "file:///Applications/Adobe Photoshop.app"
+    "file:///Applications/Adobe Illustrator 2023.app"
+    "file:///Applications/Adobe InDesign 2023.app"
+    "file:///Applications/Adobe Photoshop 2023.app"
     "file:///System/Applications/Utilities/Terminal.app"
     "file:///Applications/Audacity.app"
 )
