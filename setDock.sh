@@ -1,41 +1,33 @@
 #!/bin/bash
 
-# Check if Homebrew is already installed
-if command -v brew &>/dev/null; then
-  echo "Homebrew is already installed."
-  exit 0
-fi
+# Get the current user's home directory
+homeDirectory=$(eval echo ~$USER)
 
-# Download and run the Homebrew installation script
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Set the dock plist file path
+dockPlist="$homeDirectory/Library/Preferences/com.apple.dock.plist"
 
-# Verify that Homebrew was installed successfully
-if command -v brew &>/dev/null; then
-  echo "Homebrew installation succeeded."
-else
-  echo "Homebrew installation failed."
-  exit 1
-fi
-
-# Install dockutil using Homebrew
-brew install dockutil
+# Set the dock items
+dockItems=(
+    "file:///System/Applications/Calendar.app"
+    "file:///Applications/Firefox.app"
+    "file:///Applications/Google Chrome.app"
+    "file:///Applications/Microsoft Word.app"
+    "file:///Applications/Microsoft PowerPoint.app"
+    "file:///Applications/Adobe Illustrator.app"
+    "file:///Applications/Adobe InDesign.app"
+    "file:///Applications/Adobe Photoshop.app"
+    "file:///System/Applications/Utilities/Terminal.app"
+    "file:///Applications/Audacity.app"
+)
 
 # Remove all existing dock items
-defaults write com.apple.dock persistent-apps -array
+defaults delete com.apple.dock persistent-apps
+defaults delete com.apple.dock persistent-others
 
-# Add the specified applications to the dock
-dockutil --add /Applications/Finder.app
-dockutil --add /Applications/Calendar.app
-dockutil --add /Applications/Firefox.app
-dockutil --add "/Applications/Google Chrome.app"
-dockutil --add "/Applications/Microsoft Word.app"
-dockutil --add "/Applications/Microsoft PowerPoint.app"
-dockutil --add "/Applications/Adobe Illustrator.app"
-dockutil --add "/Applications/Adobe InDesign.app"
-dockutil --add "/Applications/Adobe Photoshop.app"
-dockutil --add /Applications/Utilities/Terminal.app
-dockutil --add "$HOME/Downloads" --view grid --display stack
-dockutil --add /System/Library/CoreServices/Dock.app/Contents/Resources/trashempty.png --view list --display stack
+# Add the new dock items
+for item in "${dockItems[@]}"; do
+    defaults write com.apple.dock persistent-others -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$item</string><key>_CFURLStringType</key><integer>15</integer></dict></dict></dict>"
+done
 
-# Restart the dock to apply changes
+# Restart the dock
 killall Dock
