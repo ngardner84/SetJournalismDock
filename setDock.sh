@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Set the dock plist file path
-dockPlist="/Library/Preferences/com.apple.dock.plist"
-
 # Set the dock items
 dockItems=(
     "file:///System/Applications/Calendar.app"
