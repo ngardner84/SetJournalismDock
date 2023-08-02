@@ -16,11 +16,6 @@ dockItems=(
 
 sleep 1s
 
-# Remove all existing dock items
-defaults delete com.apple.dock persistent-others
-
-sleep 1s
-
 # Add the new dock items
 for item in "${dockItems[@]}"; do
     defaults write com.apple.dock persistent-others -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$item</string><key>_CFURLStringType</key><integer>15</integer></dict></dict></dict>"
