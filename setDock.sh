@@ -39,12 +39,6 @@ defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</
 # Add Audacity to the dock
 defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Audacity.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
 
-# Add Downloads folder to the dock
-defaults write com.apple.dock persistent-others -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>file:///Users/$USER/Downloads/</string><key>_CFURLStringType</key><integer>15</integer></dict></dict></dict>'
-
-# Add Trash to the dock
-defaults write com.apple.dock trash-full -bool false
-
 # Restart the dock
 killall Dock
 
