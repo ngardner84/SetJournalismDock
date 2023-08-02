@@ -1,46 +1,29 @@
 #!/bin/bash
 
-# Reset the dock to its default state
-defaults write com.apple.dock persistent-apps -array
+dock_item() {
+  echo "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$1</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+}
 
-# Add Finder to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/System/Applications/Finder.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
+dockChange() {
+  defaults delete com.apple.dock persistent-apps
+  defaults write com.apple.dock persistent-apps -array \
+      "$(dock_item /System/Applications/Finder.app)" \
+      "$(dock_item /System/Applications/Calendar.app)" \
+      "$(dock_item /Applications/Firefox.app)" \
+      "$(dock_item /Applications/"Google Chrome".app)" \
+      "$(dock_item /Applications/"Microsoft Word".app)" \
+      "$(dock_item /Applications/"Microsoft PowerPoint".app)" \
+      "$(dock_item /Applications/"Adobe Illustrator".app)" \
+      "$(dock_item /Applications/"Adobe InDesign".app)" \
+      "$(dock_item /Applications/"Adobe Photoshop".app)" \
+      "$(dock_item /System/Applications/Utilities/Terminal.app)" \
+      "$(dock_item /Applications/Audacity.app)"
+  # Add Downloads folder to the dock
+  defaults write com.apple.dock persistent-others -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>file:///Users/$USER/Downloads/</string><key>_CFURLStringType</key><integer>15</integer></dict></dict></dict>'
+  # Add Trash to the dock
+  defaults write com.apple.dock trash-full -bool false
+  killall Dock
+}
 
-# Add Calendar to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/System/Applications/Calendar.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Firefox to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Firefox.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Google Chrome to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Google Chrome.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Microsoft Word to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Microsoft Word.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Microsoft PowerPoint to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Microsoft PowerPoint.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Adobe Illustrator to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Adobe Illustrator.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Adobe InDesign to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Adobe InDesign.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Adobe Photoshop to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Adobe Photoshop.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Terminal to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/System/Applications/Utilities/Terminal.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Audacity to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Audacity.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Downloads folder to the dock
-defaults write com.apple.dock persistent-others -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>file:///Users/$USER/Downloads/</string><key>_CFURLStringType</key><integer>15</integer></dict></dict></dict>'
-
-# Add Trash to the dock
-defaults write com.apple.dock trash-full -bool false
-
-# Restart the dock
-killall Dock
+# Call the dockChange function to apply the changes
+dockChange
