@@ -1,10 +1,20 @@
 #!/bin/bash
 
-# Check if Homebrew is installed
-if ! command -v brew &> /dev/null
-then
-    # Install Homebrew
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Check if Homebrew is already installed
+if command -v brew &>/dev/null; then
+  echo "Homebrew is already installed."
+  exit 0
+fi
+
+# Download and run the Homebrew installation script
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Verify that Homebrew was installed successfully
+if command -v brew &>/dev/null; then
+  echo "Homebrew installation succeeded."
+else
+  echo "Homebrew installation failed."
+  exit 1
 fi
 
 # Install dockutil using Homebrew
