@@ -3,6 +3,12 @@
 # Get the current user's home directory
 homeDirectory=$(eval echo ~$USER)
 
+# Create the com.apple.dock.plist file if it doesn't exist
+if [ ! -f "$homeDirectory/Library/Preferences/com.apple.dock.plist" ]; then
+    defaults write com.apple.dock version -int 0
+fi
+
+
 # Set the dock plist file path
 dockPlist="$homeDirectory/Library/Preferences/com.apple.dock.plist"
 
