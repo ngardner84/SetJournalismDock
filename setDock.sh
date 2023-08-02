@@ -17,7 +17,6 @@ dockItems=(
 sleep 1s
 
 # Remove all existing dock items
-defaults delete com.apple.dock persistent-apps
 defaults delete com.apple.dock persistent-others
 
 sleep 1s
