@@ -1,41 +1,31 @@
 #!/bin/bash
 
-# Reset the dock to its default state
+# Check if Homebrew is installed
+if ! command -v brew &> /dev/null
+then
+    # Install Homebrew
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
-defaults delete com.apple.dock persistent-apps
+# Install dockutil using Homebrew
+brew install dockutil
 
+# Remove all existing dock items
+defaults write com.apple.dock persistent-apps -array
+
+# Add the specified applications to the dock
+dockutil --add /Applications/Finder.app
+dockutil --add /Applications/Calendar.app
+dockutil --add /Applications/Firefox.app
+dockutil --add "/Applications/Google Chrome.app"
+dockutil --add "/Applications/Microsoft Word.app"
+dockutil --add "/Applications/Microsoft PowerPoint.app"
+dockutil --add "/Applications/Adobe Illustrator.app"
+dockutil --add "/Applications/Adobe InDesign.app"
+dockutil --add "/Applications/Adobe Photoshop.app"
+dockutil --add /Applications/Utilities/Terminal.app
+dockutil --add "$HOME/Downloads" --view grid --display stack
+dockutil --add /System/Library/CoreServices/Dock.app/Contents/Resources/trashempty.png --view list --display stack
+
+# Restart the dock to apply changes
 killall Dock
-
-# Add Calendar to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/System/Applications/Calendar.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Firefox to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Firefox.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Google Chrome to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Google Chrome.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Microsoft Word to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Microsoft Word.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Microsoft PowerPoint to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Microsoft PowerPoint.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Adobe Illustrator to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Adobe Illustrator.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Adobe InDesign to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Adobe InDesign.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Adobe Photoshop to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Adobe Photoshop.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Terminal to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/System/Applications/Utilities/Terminal.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Add Audacity to the dock
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Audacity.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-# Restart the dock
-killall Dock
-
