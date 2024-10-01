@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Set the dock items
-dockItems=(                                   
+dockItems=(
     "file:///System/Applications/Calendar.app"
     "file:///Applications/Firefox.app"
-    "file:///Applications/Google Chrome.app"                                 
+    "file:///Applications/Google Chrome.app"
     "file:///Applications/Microsoft Word.app"
     "file:///Applications/Microsoft PowerPoint.app"
     "file:///Applications/Adobe Illustrator 2024/Adobe Illustrator.app"
@@ -14,13 +14,28 @@ dockItems=(
     "file:///Applications/Audacity.app"
 )
 
+# Remove existing Dock items
 defaults delete com.apple.dock persistent-apps
 defaults delete com.apple.dock persistent-others
 
 # Add the new dock items
 for item in "${dockItems[@]}"; do
-    defaults write com.apple.dock persistent-others -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$item</string><key>_CFURLStringType</key><integer>15</integer></dict></dict></dict>"
+    defaults write com.apple.dock persistent-apps -array-add \
+    "<dict>
+        <key>tile-data</key>
+        <dict>
+            <key>file-data</key>
+            <dict>
+                <key>_CFURLString</key>
+                <string>$item</string>
+                <key>_CFURLStringType</key>
+                <integer>15</integer>
+            </dict>
+        </dict>
+        <key>tile-type</key>
+        <string>file-tile</string>
+    </dict>"
 done
 
-# Restart the dock
+# Restart the Dock
 killall Dock
