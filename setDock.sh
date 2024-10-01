@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Get the currently logged-in user
+loggedInUser=$(stat -f "%Su" /dev/console)
+
 # Set the dock items
 dockItems=(
     "file:///System/Applications/Calendar.app"
@@ -15,12 +18,12 @@ dockItems=(
 )
 
 # Remove existing Dock items
-defaults delete com.apple.dock persistent-apps
-defaults delete com.apple.dock persistent-others
+sudo -u "$loggedInUser" defaults delete com.apple.dock persistent-apps 2>/dev/null
+sudo -u "$loggedInUser" defaults delete com.apple.dock persistent-others 2>/dev/null
 
 # Add the new dock items
 for item in "${dockItems[@]}"; do
-    defaults write com.apple.dock persistent-apps -array-add \
+    sudo -u "$loggedInUser" defaults write com.apple.dock persistent-apps -array-add \
     "<dict>
         <key>tile-data</key>
         <dict>
@@ -38,4 +41,4 @@ for item in "${dockItems[@]}"; do
 done
 
 # Restart the Dock
-killall Dock
+sudo -u "$loggedInUser" killall Dock
