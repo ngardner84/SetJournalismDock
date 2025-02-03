@@ -13,6 +13,7 @@ dockItems=(
     "file:///Applications/Adobe Illustrator 2024/Adobe Illustrator.app"
     "file:///Applications/Adobe InDesign 2024/Adobe InDesign 2024.app"
     "file:///Applications/Adobe Photoshop 2024/Adobe Photoshop 2024.app"
+    "file:///Applications/Adobe Premiere 2025/Adobe Premiere 2025.app"
     "file:///System/Applications/Utilities/Terminal.app"
     "file:///Applications/Audacity.app"
 )
